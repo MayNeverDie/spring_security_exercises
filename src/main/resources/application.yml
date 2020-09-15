@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: 'pc-configurator-backend'
+  profiles:
+    active: dev
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  datasource:
+    url: ${DB_URL:jdbc:h2:mem:testdb}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:sa}
+    driver-class-name: ${DB_DRIVER:org.h2.Driver}
+  flyway:
+    schemas: 'pc_configurator'
