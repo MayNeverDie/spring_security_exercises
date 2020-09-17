@@ -5,8 +5,9 @@ plugins {
     id 'checkstyle'
 }
 
-group = 'ru.esphere.school'
-version = '0.0.1-SNAPSHOT'
+springBoot {
+    buildInfo()
+}
 
 def defaultEncoding = "UTF-8"
 System.setProperty("file.encoding", defaultEncoding)
@@ -39,7 +40,6 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
-    annotationProcessor project(':tools')
     implementation 'org.testcontainers:testcontainers:1.14.3'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

@@ -15,3 +15,31 @@ spring:
     driver-class-name: ${DB_DRIVER:org.h2.Driver}
   flyway:
     schemas: 'pc_configurator'
+
+sso:
+  cookie:
+    name: eSphereAuthTest
+
+server:
+  port: 8082
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  info:
+    git:
+      mode: full
+  endpoint:
+    info:
+      enabled: true
+    caches:
+      enabled: true
+    health:
+      enabled: true
+      show-components: always
+    prometheus:
+      enabled: true
+    metrics:
+      enabled: true
