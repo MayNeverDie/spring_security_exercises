@@ -3,8 +3,8 @@ package ru.esphere.school.config.filter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
+import javax.servlet.*;
+import javax.servlet.FilterConfig;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 @Slf4j
-public class OpenAmCookieFilter extends OncePerRequestFilter {
+public class OpenAmCookieFilter implements Filter {
 
     private final String cookieName;
 
@@ -21,7 +21,15 @@ public class OpenAmCookieFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    public void init(FilterConfig filterConfig) {
+        log.info("Initializing OpenAmCookieFilter!");
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+
         final Cookie[] cookies = request.getCookies();
 
         if (Objects.isNull(cookies)) {
@@ -42,7 +50,11 @@ public class OpenAmCookieFilter extends OncePerRequestFilter {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
-        filterChain.doFilter(request, response);
+        chain.doFilter(request, response);
     }
 
+    @Override
+    public void destroy() {
+
+    }
 }
